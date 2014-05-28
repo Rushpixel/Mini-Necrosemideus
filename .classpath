@@ -12,5 +12,5 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="/Users/BirdLab2/Desktop/lwjgl-2.9.1/jar/lzma.jar"/>
 	<classpathentry kind="lib" path="/Users/BirdLab2/Desktop/lwjgl-2.9.1/slick/lib/slick.jar"/>
-	<classpathentry kind="output" path="bin1"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>
