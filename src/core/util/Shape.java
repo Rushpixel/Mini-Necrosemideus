@@ -122,9 +122,39 @@ public class Shape {
 		{
 			glEnable(GL_TEXTURE_2D);
 			glTranslatef(x, y, z);
+			glRotatef(rz, 0, 0, 1);
 			glRotatef(rx, 1, 0, 0);
 			glRotatef(ry, 0, 1, 0);
+			glColor4f(1,1,1,1);
+			texture.bind();
+			glBegin(GL_TRIANGLES);
+			{
+				for(Triangle tri: model.t){
+					glTexCoord2f(model.vt.get(tri.v1.y - 1).x, model.vt.get(tri.v1.y - 1).y);
+					glVertex3f(model.v.get(tri.v1.x - 1).x, model.v.get(tri.v1.x - 1).y, model.v.get(tri.v1.x - 1).z);
+					
+					glTexCoord2f(model.vt.get(tri.v2.y - 1).x, model.vt.get(tri.v2.y - 1).y);
+					glVertex3f(model.v.get(tri.v2.x - 1).x, model.v.get(tri.v2.x - 1).y, model.v.get(tri.v2.x - 1).z);
+					
+					glTexCoord2f(model.vt.get(tri.v3.y - 1).x, model.vt.get(tri.v3.y - 1).y);
+					glVertex3f(model.v.get(tri.v3.x - 1).x, model.v.get(tri.v3.x - 1).y, model.v.get(tri.v3.x - 1).z);
+				}
+			}
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+		}
+		glPopMatrix();
+	}
+	
+	public static void model(float x, float y, float z, float sx, float sy, float sz, float rx, float ry, float rz, Model model, Texture texture) {
+		glPushMatrix();
+		{
+			glEnable(GL_TEXTURE_2D);
+			glTranslatef(x, y, z);
+			glScalef(sx, sy, sz);
 			glRotatef(rz, 0, 0, 1);
+			glRotatef(rx, 1, 0, 0);
+			glRotatef(ry, 0, 1, 0);
 			glColor4f(1,1,1,1);
 			texture.bind();
 			glBegin(GL_TRIANGLES);
@@ -299,4 +329,29 @@ public class Shape {
 		}
 		glPopMatrix();
 	}
+	
+	public static void square(float x, float y, float z, float width, float height, float xr, float yr, float zr, float r, float g, float b, Texture tex) {
+		glPushMatrix();
+		{
+			glEnable(GL_TEXTURE_2D);
+			tex.bind();
+			glColor4f(r, g, b, 1);
+			glTranslatef(x, y, z);
+			glBegin(GL_QUADS);
+			{
+				glTexCoord2f(0, 0);
+				glVertex3f(0, 0, 0);
+				glTexCoord2f(0, 1);
+				glVertex3f(0, height, 0);
+				glTexCoord2f(1, 1);
+				glVertex3f(width, height, 0);
+				glTexCoord2f(1, 0);
+				glVertex3f(width, 0, 0);
+			}
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+		}
+		glPopMatrix();
+	}
+	
 }

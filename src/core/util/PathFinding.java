@@ -154,7 +154,7 @@ public class PathFinding {
 					if (closed.contains(graph[ix][iy])) {
 						graph[ix][iy].render(x, y, 1f, 0f, 1f);
 					}
-					graph[ix][iy].render(x, y, 0.3f, 0.3f, 0.3f);
+					//graph[ix][iy].render(x, y, 0.3f, 0.3f, 0.3f);
 				}
 			}
 			Start.render(x, y, 0f, 1f, 0f);

@@ -24,7 +24,7 @@ public class Wall extends Tile{
 		if(MathUtil.distance(x, y, SceneGraph.player.x, SceneGraph.player.y) < 285){
 			Shape.model(x + 16, y + 16, 32, 0, 0, 0, Assets.MODEL_WALL1, Assets.TEXTURE_WALL1);
 		}
-		if(Main.ShadowDraw)Shape.cube(x, y, 32, x + 32, y + 32, 598, 0, 0, 0, 1);
+		if(Main.ShadowDraw)Shape.cube(x, y, 32, x + 32, y + 32, 610, 0, 0, 0, 1);
 		/*renderShadow(x, y + 32, x, y, x + 32, y);
 		renderShadow(x, y, x + 32, y, x + 32, y + 32);
 		renderShadow(x + 32, y, x + 32, y + 32, x, y + 32);

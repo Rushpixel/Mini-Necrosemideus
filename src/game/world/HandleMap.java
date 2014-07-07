@@ -16,8 +16,7 @@ public class HandleMap {
 			SceneGraph.map = SceneGraph.prevmap;
 			SceneGraph.prevmap = tempMap;
 		} else {
-			SceneGraph.prevmap = SceneGraph.map;
-			SceneGraph.map = newMap();
+			nextMap();
 		}
 		SceneGraph.prevDirection = Exit.SOUTH;
 	}
@@ -28,8 +27,7 @@ public class HandleMap {
 			SceneGraph.map = SceneGraph.prevmap;
 			SceneGraph.prevmap = tempMap;
 		} else {
-			SceneGraph.prevmap = SceneGraph.map;
-			SceneGraph.map = newMap();
+			nextMap();
 		}
 		SceneGraph.prevDirection = Exit.WEST;
 	}
@@ -40,8 +38,7 @@ public class HandleMap {
 			SceneGraph.map = SceneGraph.prevmap;
 			SceneGraph.prevmap = tempMap;
 		} else {
-			SceneGraph.prevmap = SceneGraph.map;
-			SceneGraph.map = newMap();
+			nextMap();
 		}
 		SceneGraph.prevDirection = Exit.NORTH;
 	}
@@ -52,25 +49,32 @@ public class HandleMap {
 			SceneGraph.map = SceneGraph.prevmap;
 			SceneGraph.prevmap = tempMap;
 		} else {
-			SceneGraph.prevmap = SceneGraph.map;
-			SceneGraph.map = newMap();
+			nextMap();
 		}
 		SceneGraph.prevDirection = Exit.EAST;
+	}
+	
+	public static void nextMap(){
+		Difficulty.frequency = 0.02f + ((SceneGraph.player.score / 300000f));
+		if(Difficulty.frequency > 0.05f) Difficulty.frequency = 0.05f;
+		//System.out.println(Difficulty.frequency);
+		
+		SceneGraph.prevmap = SceneGraph.map;
+		SceneGraph.map = newMap();
+		for(int i = 0; i < SceneGraph.map.height * SceneGraph.map.width; i++){
+			SceneGraph.map.Map[i % SceneGraph.map.width][i / SceneGraph.map.height].rollEnemy(random, SceneGraph.map);
+		}
 	}
 
 	public static Map newMap() {
 		Map newMap = randomMap();
-		int num = 20;
-		for (int i = 0; i < num; i++) {
-			newMap.entitylist.add(new Zombie(random.nextFloat() * (newMap.width * 32), random.nextFloat() * (newMap.height * 32), random.nextFloat() * 2.3f + 3, 70));
-		}
 		return newMap;
 	}
 	
 	public static Map randomMap(){
 		Map map = Assets.StaticMaps[random.nextInt(Assets.StaticMaps.length)].clone();
 		for(int i = 0; i < map.height * map.width; i++){
-			map.Map[i % map.width][i / map.height].rollTile(random);
+			map.Map[i % map.width][i / map.height].rollTile(random, map);
 		}
 		return map;
 	}

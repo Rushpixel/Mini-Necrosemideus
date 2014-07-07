@@ -23,7 +23,9 @@ public abstract class Tile{
 		staticOwner = map;
 	}
 	
-	public void rollTile(Random r){}
+	public void rollTile(Random r, Map map){}
+	
+	public void rollEnemy(Random r, Map map){}
 	
 	public void reportCollision(Entity e){}
 
@@ -31,7 +33,9 @@ public abstract class Tile{
 	}
 	
 	public void renderhitbox(){
-		Shape.cube(boundingBox.UL.x, boundingBox.UL.y, 10, boundingBox.DR.x, boundingBox.DR.y, -4, 1, 0, 0, 1);
+		if(boundingBox != null){
+			Shape.cube(boundingBox.UL.x, boundingBox.UL.y, 10, boundingBox.DR.x, boundingBox.DR.y, -4, 1, 0, 0, 1);
+		}		
 	}
 
 }

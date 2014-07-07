@@ -34,7 +34,7 @@ public class Camera {
 
 		this.FoV = 45;
 		this.aspect = 1f / 1f;
-		this.near = 30f;
+		this.near = 20f;
 		this.far = 2000;
 
 		initProjection();

@@ -2,6 +2,7 @@ package game.world;
 
 import java.util.ArrayList;
 
+import core.util.Shape;
 import game.entity.Entity;
 import game.world.tile.*;
 
@@ -9,7 +10,7 @@ public class Map extends Entity implements Cloneable {
 
 	public int width = 32;
 	public int height = 32;
-	public Tile Map[][] = new Tile[width][height];
+	public Tile Map[][];
 
 	public int northStartx;
 	public int westStartx;
@@ -25,17 +26,18 @@ public class Map extends Entity implements Cloneable {
 	public Map(int width, int height) {
 		this.width = width;
 		this.height = height;
+		Map = new Tile[width][height];
 
 		northStarty = 1;
-		eastStartx = width - 1;
-		southStarty = height - 1;
+		eastStartx = width - 2;
+		southStarty = height - 2;
 		westStartx = 1;
 	}
 
 	public void update() {
 		for (int i = 0; i < entitylist.size(); i++) {
 			entitylist.get(i).update();
-			if(entitylist.get(i).doKill) entitylist.remove(i);
+			if (entitylist.get(i).doKill) entitylist.remove(i);
 		}
 	}
 

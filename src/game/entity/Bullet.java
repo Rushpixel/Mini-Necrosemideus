@@ -16,6 +16,7 @@ public class Bullet extends Entity {
 
 	public Entity parent;
 	public List<Entity> collisions = new ArrayList<Entity>();
+	public boolean hit = false;
 
 	public Bullet(float x, float y, float direction, float speed, int lifespan, float damage, Entity parent) {
 		this.x = x;
@@ -39,6 +40,10 @@ public class Bullet extends Entity {
 	}
 
 	public void update() {
+		if(hit){
+			doKill = true;
+			return;
+		}
 		physics();
 		float dist = MathUtil.distance(x, y, xprev, yprev) + 1;
 		c2.x = dist;
@@ -53,11 +58,13 @@ public class Bullet extends Entity {
 	}
 
 	public void render() {
-		Shape.cube(x, y, 0, c2.x, c2.y, 16, c3.x, c3.y, 18, 0, 0, rotation, 0.7f, 0.7f, 0f, 1);
+		//Shape.cube(x, y, 0, c2.x, c2.y, 16, c3.x, c3.y, 18, 0, 0, rotation - 180, 0.7f, 0.7f, 0f, 1);
+		//Shape.cube(x, y, 17, -3, -3, -3, 3, 3, 3, 0, 0, rotation, 0.7f, 0.7f, 0f, 0.0f);
+		Shape.cube(x, y, 17, -2, -2, -2, 2, 2, 2, 0, 0, rotation, 1f, 1f, 1f, 1f);
 	}
 
 	public boolean doesCollideWith(Entity e) {
-		if (e != parent) {
+		if (e != parent && !hit) {
 			return true;
 		}
 		return false;
@@ -84,19 +91,19 @@ public class Bullet extends Entity {
 					nearest = e;
 				}
 			}
-			nearest.Damage(damage);;
-			x -= MathUtil.getXSpeed(rotation, nearestE);
-			x -= MathUtil.getYSpeed(rotation, nearestE);
+			nearest.Damage(damage);
+			nearest.xspeed += MathUtil.getXSpeed(rotation, speed / 8);
+			nearest.yspeed += MathUtil.getYSpeed(rotation, speed / 8);
+			//x -= MathUtil.getXSpeed(rotation, nearestE);
+			//x -= MathUtil.getYSpeed(rotation, nearestE);
 		}
 	}
 
 	public void entityCollision(float x, float y, Entity other) {
-		doKill = true;
+		hit = true;
 		collisions.add(other);
 	}
 
-	public void tileCollision(Tile t) {
-		doKill = true;
-	}
+	
 
 }

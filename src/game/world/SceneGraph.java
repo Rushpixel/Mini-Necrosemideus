@@ -15,9 +15,10 @@ public class SceneGraph {
 	}
 	
 	public static void newGame(){
+		Difficulty.frequency = .02f;
 		map = HandleMap.randomMap();
 		prevmap = HandleMap.newMap();
-		player = new Player(map.westStartx * 32 + 16, map.westStarty * 32 + 16);
+		player = new Player(map.southStartx * 32 + 16, map.southStarty * 32 + 16);
 		Game.inMenu = false;
 	}
 	

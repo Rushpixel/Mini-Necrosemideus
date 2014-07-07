@@ -14,7 +14,7 @@ public class PauseMenu extends Menu {
 	public int scrollTimer = 0;
 
 	public PauseMenu() {
-		UI.add(new Button(Assets.TEXTURE_BUTTONS, 20, 450, 100, 28, 0, 98f / 256f, 50f / 256f, 84f / 256f, 0, 112f / 256f, 50f / 256f, 98f / 256f));
+		UI.add(new Button(Assets.TEXTURE_BUTTONS, 20, 450, 100, 28, 0, 098f / 256f, 50f / 256f, 084f / 256f, 0, 112f / 256f, 50f / 256f, 098f / 256f));
 		UI.add(new Button(Assets.TEXTURE_BUTTONS, 20, 415, 100, 28, 0, 126f / 256f, 50f / 256f, 112f / 256f, 0, 140f / 256f, 50f / 256f, 126f / 256f));
 		UI.add(new Button(Assets.TEXTURE_BUTTONS, 20, 380, 100, 28, 0, 154f / 256f, 50f / 256f, 140f / 256f, 0, 168f / 256f, 50f / 256f, 154f / 256f));
 		UI.add(new Button(Assets.TEXTURE_BUTTONS, 20, 345, 100, 28, 0, 182f / 256f, 50f / 256f, 168f / 256f, 0, 196f / 256f, 50f / 256f, 182f / 256f));
@@ -50,6 +50,10 @@ public class PauseMenu extends Menu {
 				Game.mainmenu.pause = 10;
 			}
 			if (UI.get(scroll).pressed && scroll == 3) System.exit(0);
+			
+			if(UI.get(scroll).pressed){
+				UI.get(scroll).pressed = false;
+			}
 		}
 	}
 

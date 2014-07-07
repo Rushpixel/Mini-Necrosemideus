@@ -11,14 +11,14 @@ import game.world.SceneGraph;
 
 public class Game {
 
-	public SceneGraph scene;;
+	public SceneGraph scene;
 
 	public UI_Main UI;
 
 	public static MainMenu mainmenu;
 	public static boolean inMenu = true;
 	public static PauseMenu pausemenu;
-	public static boolean pause = false;;
+	public static boolean pause = false;
 
 	public Game() {
 		// load assets
