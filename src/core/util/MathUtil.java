@@ -54,7 +54,7 @@ public class MathUtil {
 			// the denominator is zero so the lines are parallel and there's
 			// either no solution (or multiple solutions if the lines overlap)
 			// so return null.
-			// System.out.println("Lines are parallel");
+			//System.out.println("Lines are parallel");
 			return null;
 		}
 		double x = (det(det1And2, x1LessX2, det3And4, x3LessX4) / det1Less2And3Less4);

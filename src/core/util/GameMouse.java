@@ -14,6 +14,7 @@ public class GameMouse {
 	Robot robot;
 
 	public static float hMov = 0;
+	public static float vMov = 0;
 
 	public GameMouse() {
 		try {
@@ -51,6 +52,7 @@ public class GameMouse {
 
 		if (Mouse.isGrabbed()) {
 			hMov = (Display.getWidth() / 2 - Mouse.getX());
+			vMov = (Display.getHeight() / 2 - Mouse.getY());
 			Mouse.setCursorPosition(Display.getWidth() / 2, Display.getHeight() / 2);
 		}
 	}

@@ -4,8 +4,8 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.PixelFormat;
 
+import core.util.Audio;
 import core.util.GameMouse;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -15,11 +15,16 @@ import static org.lwjgl.opengl.GL11.*;
 public class Main {
 
 	public Game game;
+	
+	public static Audio audio;
 
 	public static int UPS = 60;
 	public static boolean VSync = true;
 	public static boolean AStarDraw = false;
 	public static boolean ShadowDraw = true;
+	public static boolean mouseMenu = false;
+	
+	public static float lastFPS = 0;
 
 	public static Camera camera;
 	public static GameMouse mouse;
@@ -34,6 +39,8 @@ public class Main {
 		createDisplay();
 
 		initOpenGL();
+		
+		initAudio();
 
 		initGame();
 
@@ -72,6 +79,10 @@ public class Main {
 		camera = new Camera();
 		mouse = new GameMouse();
 	}
+	
+	public void initAudio(){
+		audio = new Audio();
+	}
 
 	public void initGame() {
 		game = new Game();
@@ -104,6 +115,7 @@ public class Main {
 			if (System.currentTimeMillis() - 1000 > count_time) {
 				Display.setTitle("Necromemideus FPS: " + fcounter + " UPS: " + ucounter);
 				ucounter = 0;
+				lastFPS = fcounter;
 				fcounter = 0;
 				count_time = System.currentTimeMillis();
 			}
@@ -124,9 +136,36 @@ public class Main {
 		
 		Display.update();
 	}
+	
+	public static void printRAM(){
+		int kb = 1024;
+        
+        //Getting the runtime reference from system
+        Runtime runtime = Runtime.getRuntime();
+        
+        System.out.println();
+        System.out.println("HEAP DATA for JVM");
+         
+        //Print used memory
+        System.out.println("Used Memory: "
+            + (runtime.totalMemory() - runtime.freeMemory()) / kb + "KB");
+ 
+        //Print free memory
+        System.out.println("Free Memory: "
+            + runtime.freeMemory() / kb + "KB");
+         
+        //Print total available memory
+        System.out.println("Total Memory: " + runtime.totalMemory() / kb + "KB");
+ 
+        //Print Maximum available memory
+        System.out.println("Max Memory: " + runtime.maxMemory() / kb + "KB");
+        
+        System.out.println();
+	}
 
 	public void end() {
 		Display.destroy();
+		Audio.soundsystem.cleanup();
 		System.exit(0);
 	}
 }

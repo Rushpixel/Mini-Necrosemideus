@@ -2,7 +2,7 @@ package core;
 
 import game.ui.MainMenu;
 import game.ui.PauseMenu;
-import game.ui.UI_Main;
+import game.ui.UI_HUD;
 import game.world.SceneGraph;
 
 /**
@@ -13,7 +13,7 @@ public class Game {
 
 	public SceneGraph scene;
 
-	public UI_Main UI;
+	public UI_HUD UI;
 
 	public static MainMenu mainmenu;
 	public static boolean inMenu = true;
@@ -24,7 +24,7 @@ public class Game {
 		// load assets
 		Assets.load();
 		// ui init
-		UI = new UI_Main();
+		UI = new UI_HUD();
 		mainmenu = new MainMenu();
 		pausemenu = new PauseMenu();
 		// init SceneGraph
@@ -33,13 +33,13 @@ public class Game {
 	}
 
 	public void update() {
+		Main.mouse.update();
 		if(!inMenu && !pause) updateScene();
 		if(!inMenu && pause) pausemenu.Update();
 		if(inMenu) mainmenu.Update();
 	}
 
 	public void updateScene() {
-		Main.mouse.update();
 		SceneGraph.update();
 	}
 
@@ -50,6 +50,7 @@ public class Game {
 	}
 
 	public void renderScene() {
+		if(Main.lastFPS < 30) SceneGraph.map.particlelist.clear();
 		Main.camera.useView();
 		SceneGraph.render();
 		UI.render();

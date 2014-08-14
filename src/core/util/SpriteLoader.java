@@ -29,6 +29,7 @@ public class SpriteLoader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("texture '" + key + "' loaded [" + texture.getImageWidth() + "," + texture.getImageHeight() + "]");
 		return texture;
 	}
 	

@@ -1,6 +1,7 @@
 package game.ui;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.opengl.Texture;
 
 import core.util.Shape;
@@ -42,7 +43,7 @@ public class Button {
 	}
 
 	public void update() {
-		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) || Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) || Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Mouse.isButtonDown(0)) {
 			pressed = true;
 		} else {
 			pressed = false;

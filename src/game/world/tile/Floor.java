@@ -6,8 +6,8 @@ import org.newdawn.slick.opengl.Texture;
 
 import core.Assets;
 import core.util.MathUtil;
-import core.util.Model;
 import core.util.Shape;
+import game.entity.Entity;
 import game.world.Difficulty;
 import game.world.Map;
 import game.world.SceneGraph;
@@ -18,9 +18,16 @@ public class Floor extends Tile {
 	public Texture tex;
 	public float prob = 1f;
 
+	public Entity[] spawnList;
+
 	public Floor(float x, float y, Map map, float prob) {
 		super(x, y, map);
 		this.prob = prob;
+	}
+
+	public Floor(float x, float y, Map map, Entity[] spawnList) {
+		super(x, y, map);
+		this.spawnList = spawnList;
 	}
 
 	public void rollTile(Random r, Map map) {
@@ -51,8 +58,14 @@ public class Floor extends Tile {
 	}
 
 	public void rollEnemy(Random r, Map map) {
-		if (r.nextFloat() < Difficulty.frequency * prob) {
-			Difficulty.spawnEnemy(r, map, x, y);
+		if (spawnList == null) {
+			if (r.nextFloat() < Difficulty.frequency * prob) {
+				Difficulty.spawnEnemy(r, map, x, y);
+			}
+		} else{
+			for(int i = 0; i < spawnList.length; i++){
+				map.entitylist.add(spawnList[i]);
+			}
 		}
 	}
 

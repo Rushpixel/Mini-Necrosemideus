@@ -2,8 +2,8 @@ package game.world;
 
 import java.util.ArrayList;
 
-import core.util.Shape;
 import game.entity.Entity;
+import game.particle.Particle;
 import game.world.tile.*;
 
 public class Map extends Entity implements Cloneable {
@@ -11,33 +11,33 @@ public class Map extends Entity implements Cloneable {
 	public int width = 32;
 	public int height = 32;
 	public Tile Map[][];
-
-	public int northStartx;
-	public int westStartx;
-	public int southStartx;
-	public int eastStartx;
-	public int northStarty;
-	public int westStarty;
-	public int southStarty;
-	public int eastStarty;
+	
+	public String Name = "";
 
 	public ArrayList<Entity> entitylist = new ArrayList<Entity>();
+	public ArrayList<Particle> particlelist = new ArrayList<Particle>();
 
-	public Map(int width, int height) {
+	public Map(int width, int height, String Name) {
 		this.width = width;
 		this.height = height;
+		this.Name = Name;
 		Map = new Tile[width][height];
-
-		northStarty = 1;
-		eastStartx = width - 2;
-		southStarty = height - 2;
-		westStartx = 1;
 	}
 
 	public void update() {
 		for (int i = 0; i < entitylist.size(); i++) {
 			entitylist.get(i).update();
-			if (entitylist.get(i).doKill) entitylist.remove(i);
+			if (entitylist.get(i).doKill) {
+				entitylist.get(i).onKill();
+				entitylist.remove(i);
+			}
+		}
+		for (int i = 0; i < particlelist.size(); i++) {
+			particlelist.get(i).update();
+			if (particlelist.get(i).doKill) {
+				particlelist.get(i).onKill();
+				particlelist.remove(i);
+			}
 		}
 	}
 
@@ -47,6 +47,9 @@ public class Map extends Entity implements Cloneable {
 		}
 		for (Entity e : entitylist) {
 			e.render();
+		}
+		for (Particle p : particlelist) {
+			p.render();
 		}
 	}
 
@@ -66,6 +69,7 @@ public class Map extends Entity implements Cloneable {
 		try {
 			Map clone = (Map) super.clone();
 			clone.entitylist = (ArrayList<Entity>) clone.entitylist.clone();
+			clone.particlelist.clear();
 			return clone;
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();

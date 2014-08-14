@@ -7,6 +7,7 @@ import core.util.Shape;
 import game.entity.Entity;
 import game.world.HandleMap;
 import game.world.Map;
+import game.world.Map_Level;
 import game.world.SceneGraph;
 
 public class Exit extends Tile {
@@ -25,7 +26,7 @@ public class Exit extends Tile {
 		float cx = x * 32;
 		float cy = y * 32;
 		boundingBox = new Rectangle(cx, cy, cx + 32, cy, cx, cy + 32, cx + 32, cy + 32);
-		boundingBox.calcAxis();
+		//boundingBox.calcAxis();
 		if (x == 0) orientation = WEST;
 		if (y == staticOwner.height - 1) orientation = SOUTH;
 		if (x == staticOwner.width - 1) orientation = EAST;
@@ -36,28 +37,38 @@ public class Exit extends Tile {
 		if (e.equals(SceneGraph.player)) {
 			if (orientation == NORTH) {
 				HandleMap.goNorth();
-				e.x = SceneGraph.map.southStartx * 32 + 16;
-				e.y = SceneGraph.map.southStarty * 32 + 16;
+				Map_Level map = (Map_Level)SceneGraph.map;
+				e.x = map.southStartx * 32 + 16;
+				e.y = map.southStarty * 32 + 16;
 			}                                        
 			if (orientation == WEST) {               
-				HandleMap.goWest();                  
-				e.x = SceneGraph.map.eastStartx * 32 + 16; 
-				e.y = SceneGraph.map.eastStarty * 32 + 16;
+				HandleMap.goWest();   
+				Map_Level map = (Map_Level)SceneGraph.map;
+				e.x = map.eastStartx * 32 + 16; 
+				e.y = map.eastStarty * 32 + 16;
 			}                                        
 			if (orientation == SOUTH) {              
-				HandleMap.goSouth();                 
-				e.x = SceneGraph.map.northStartx * 32 + 16;
-				e.y = SceneGraph.map.northStarty * 32 + 16;
+				HandleMap.goSouth();    
+				Map_Level map = (Map_Level)SceneGraph.map;
+				e.x = map.northStartx * 32 + 16;
+				e.y = map.northStarty * 32 + 16;
 			}
 			if (orientation == EAST) {
 				HandleMap.goEast();
-				e.x = SceneGraph.map.westStartx * 32 + 16;
-				e.y = SceneGraph.map.westStarty * 32 + 16;
+				Map_Level map = (Map_Level)SceneGraph.map;
+				e.x = map.westStartx * 32 + 16;
+				e.y = map.westStarty * 32 + 16;
 			}
 			e.xprev = e.x;
 			e.yprev = e.y;
 			e.updateBox();
 		}
+	}
+	
+	public boolean isSolidFor(Entity e){
+		if(e == SceneGraph.player){
+			return false;
+		} else return solid;
 	}
 
 	public void render(float x, float y) {

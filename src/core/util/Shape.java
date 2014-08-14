@@ -217,7 +217,7 @@ public class Shape {
 		glPopMatrix();
 	}
 
-	public static void cube(float x, float y, float z, float x1, float y1, int z1, float x2, float y2, int z2, float rx, float ry, float rz, float r, float g, float b, float a) {
+	public static void cube(float x, float y, float z, float x1, float y1, float z1, float x2, float y2, float z2, float rx, float ry, float rz, float r, float g, float b, float a) {
 		glPushMatrix();
 		{
 			glColor4f(r, g, b, a);
@@ -337,6 +337,9 @@ public class Shape {
 			tex.bind();
 			glColor4f(r, g, b, 1);
 			glTranslatef(x, y, z);
+			glRotatef(xr, 1, 0, 0);
+			glRotatef(yr, 0, 1, 0);
+			glRotatef(zr, 0, 0, 1);
 			glBegin(GL_QUADS);
 			{
 				glTexCoord2f(0, 0);
@@ -353,5 +356,58 @@ public class Shape {
 		}
 		glPopMatrix();
 	}
+	
+	public static void squarer(float x, float y, float z, float width, float height, float xr, float yr, float zr, Texture tex) {
+		glPushMatrix();
+		{
+			glEnable(GL_TEXTURE_2D);
+			tex.bind();
+			glColor4f(1, 1, 1, 1);
+			glTranslatef(x, y, z);
+			glRotatef(xr, 1, 0, 0);
+			glRotatef(yr, 0, 1, 0);
+			glRotatef(zr, 0, 0, 1);
+			glBegin(GL_QUADS);
+			{
+				glTexCoord2f(0, 0);
+				glVertex3f(-width / 2, -height / 2, 0);
+				glTexCoord2f(0, 1);
+				glVertex3f(-width / 2, height / 2, 0);
+				glTexCoord2f(1, 1);
+				glVertex3f(width / 2, height / 2, 0);
+				glTexCoord2f(1, 0);
+				glVertex3f(width / 2, -height / 2, 0);
+			}
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+		}
+		glPopMatrix();
+	}
+	
+	public static void squarer(float x, float y, float z, float width, float height, float xr, float yr, float zr, float r, float g, float b, float a) {
+		glPushMatrix();
+		{
+			glColor4f(r, g, b, a);
+			glTranslatef(x, y, z);
+			glRotatef(xr, 1, 0, 0);
+			glRotatef(yr, 0, 1, 0);
+			glRotatef(zr, 0, 0, 1);
+			glBegin(GL_QUADS);
+			{
+				glTexCoord2f(0, 0);
+				glVertex3f(-width / 2, -height / 2, 0);
+				glTexCoord2f(0, 1);
+				glVertex3f(-width / 2, height / 2, 0);
+				glTexCoord2f(1, 1);
+				glVertex3f(width / 2, height / 2, 0);
+				glTexCoord2f(1, 0);
+				glVertex3f(width / 2, -height / 2, 0);
+			}
+			glEnd();
+		}
+		glPopMatrix();
+	}
+	
+	
 	
 }

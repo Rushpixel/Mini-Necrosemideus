@@ -3,7 +3,6 @@ package game.world;
 import java.util.Random;
 
 import core.Assets;
-import game.entity.Zombie;
 import game.world.tile.Exit;
 
 public class HandleMap {
@@ -12,9 +11,7 @@ public class HandleMap {
 
 	public static void goNorth() {
 		if (SceneGraph.prevDirection == Exit.NORTH) {
-			Map tempMap = SceneGraph.map;
-			SceneGraph.map = SceneGraph.prevmap;
-			SceneGraph.prevmap = tempMap;
+			prevMap();
 		} else {
 			nextMap();
 		}
@@ -23,9 +20,7 @@ public class HandleMap {
 
 	public static void goEast() {
 		if (SceneGraph.prevDirection == Exit.EAST) {
-			Map tempMap = SceneGraph.map;
-			SceneGraph.map = SceneGraph.prevmap;
-			SceneGraph.prevmap = tempMap;
+			prevMap();
 		} else {
 			nextMap();
 		}
@@ -34,9 +29,7 @@ public class HandleMap {
 
 	public static void goSouth() {
 		if (SceneGraph.prevDirection == Exit.SOUTH) {
-			Map tempMap = SceneGraph.map;
-			SceneGraph.map = SceneGraph.prevmap;
-			SceneGraph.prevmap = tempMap;
+			prevMap();
 		} else {
 			nextMap();
 		}
@@ -45,13 +38,18 @@ public class HandleMap {
 
 	public static void goWest() {
 		if (SceneGraph.prevDirection == Exit.WEST) {
-			Map tempMap = SceneGraph.map;
-			SceneGraph.map = SceneGraph.prevmap;
-			SceneGraph.prevmap = tempMap;
+			prevMap();
 		} else {
 			nextMap();
 		}
 		SceneGraph.prevDirection = Exit.EAST;
+	}
+	
+	public static void prevMap(){
+		SceneGraph.map.particlelist.clear();
+		Map tempMap = SceneGraph.map;
+		SceneGraph.map = SceneGraph.prevmap;
+		SceneGraph.prevmap = tempMap;
 	}
 	
 	public static void nextMap(){
@@ -65,6 +63,17 @@ public class HandleMap {
 			SceneGraph.map.Map[i % SceneGraph.map.width][i / SceneGraph.map.height].rollEnemy(random, SceneGraph.map);
 		}
 	}
+	
+	public static Map newMapHub(){
+		Map map = Assets.MAP_HUBMAIN.clone();
+		for(int i = 0; i < map.height * map.width; i++){
+			map.Map[i % map.width][i / map.height].rollTile(random, map);
+		}
+		for(int i = 0; i < map.height * map.width; i++){
+			map.Map[i % map.width][i / map.height].rollEnemy(random, map);
+		}
+		return map;
+	}
 
 	public static Map newMap() {
 		Map newMap = randomMap();
@@ -72,7 +81,7 @@ public class HandleMap {
 	}
 	
 	public static Map randomMap(){
-		Map map = Assets.StaticMaps[random.nextInt(Assets.StaticMaps.length)].clone();
+		Map map = Assets.StaticMapsCatacombs[random.nextInt(Assets.StaticMapsCatacombs.length)].clone();
 		for(int i = 0; i < map.height * map.width; i++){
 			map.Map[i % map.width][i / map.height].rollTile(random, map);
 		}

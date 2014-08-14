@@ -45,7 +45,7 @@ public class ModelLoader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("model loaded with " + model.t.size() + " triangles");
+		System.out.println("model '" + key +"' loaded with " + model.t.size() + " triangles");
 		return model;
 	}
 
